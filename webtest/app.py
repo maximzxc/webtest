@@ -518,7 +518,8 @@ class TestApp(object):
             _append_file(file_info)
 
         lines.extend([b'--' + boundary + b'--', b''])
-        body = b'\r\n'.join(lines)
+        # sometimes there will be an int
+        body = b'\r\n'.join(str(l) for l in lines)
         boundary = boundary.decode('ascii')
         content_type = 'multipart/form-data; boundary=%s' % boundary
         return content_type, body
